@@ -1,0 +1,7 @@
+#!/usr/bin/osascript
+
+tell application "Finder"
+	set desktop picture to file {"Macintosh HD:Users:lena:Desktop:a.JPG"}
+	delay 5
+	set desktop picture to file {"Macintosh HD:Users:lena:Desktop:b.JPG"}
+end tell

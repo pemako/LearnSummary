@@ -1,0 +1,20 @@
+# 小结
+
+1、打印 print
+2、导入 import
+3、赋值 
+4、块
+5、条件
+6、断言 assert
+7、循环
+8、列表推导式
+9、pass del evel exec
+
+
+# 函数
+1、eval(source) 将字符串作为表达式计算，并且返回值
+2、enumerate() 产生用于迭代的（索引，值）对
+3、range() 创建整数列表
+4、xrange() 创造 xrange()对象用于迭代
+5、sorted() 返回 seq 中值排序后的列表
+6、zip(seq1, seq2) 创造用于并行迭代的新序列

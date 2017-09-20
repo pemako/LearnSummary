@@ -1,0 +1,303 @@
+﻿<!DOCTYPE htmlPUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+	<script type="text/javascript" src="http://duomeng.cn/include/landingv4.js"></script>
+	<script type="text/javascript" src="http://duomeng.cn/include/domobAmonitor.js"></script>
+	<script type="text/javascript" src="http://duomeng.cn/include/jquery.min.js"></script>
+	<title>幸运大转盘</title>
+</head>
+<style type="text/css">
+body{
+	background-color: #3d0404;
+	font-family: "Hiragino Sans GB";
+	overflow-x: hidden;
+}
+.hidden{
+	opacity: 0;
+}
+	#cosmetic{
+		width: 640px;
+		min-height: 1012px;
+		zoom: 0.5;
+		height: 100%;
+		background: transparent url('award_bg.jpg') no-repeat center top;
+		background-size: 640px auto;
+		overflow: hidden;
+	}
+	#roulette{
+		width: 540px;
+		height: 540px;
+		position: absolute;
+		left: 50%;
+		margin-left: -270px;
+		top: 36px;
+		overflow: hidden;
+	}
+
+@-webkit-keyframes rolling {
+	from {-webkit-transform: rotate(0);}
+	to {-webkit-transform: rotate(720deg);}
+}
+@-ms-keyframes rolling {
+	from {-ms-transform: rotate(0);}
+	to {-ms-transform: rotate(720deg);}
+}
+@keyframes rolling {
+	from {transform: rotate(0);}
+	to {transform: rotate(720deg);}
+}
+
+@-webkit-keyframes rollend_0 { from {-webkit-transform: rotate(0);} to {-webkit-transform: rotate(1440deg);}}
+@-ms-keyframes rollend_0 { from {-ms-transform: rotate(0);} to {-ms-transform: rotate(1440deg);}}
+@keyframes rollend_0 { from {transform: rotate(0);} to {transform: rotate(1440deg);}}
+
+@-webkit-keyframes rollend_1 { from {-webkit-transform: rotate(0);} to {-webkit-transform: rotate(1470deg);}}
+@-ms-keyframes rollend_1 { from {-ms-transform: rotate(0);} to {-ms-transform: rotate(1470deg);}}
+@keyframes rollend_1 { from {transform: rotate(0);} to {transform: rotate(1470deg);}}
+
+@-webkit-keyframes rollend_2 { from {-webkit-transform: rotate(0);} to {-webkit-transform: rotate(1410deg);}}
+@-ms-keyframes rollend_2 { from {-ms-transform: rotate(0);} to {-ms-transform: rotate(1410deg);}}
+@keyframes rollend_2 { from {transform: rotate(0);} to {transform: rotate(1410deg);}}
+
+@-webkit-keyframes rollend_3 { from {-webkit-transform: rotate(0);} to {-webkit-transform: rotate(1530deg);}}
+@-ms-keyframes rollend_3 { from {-ms-transform: rotate(0);} to {-ms-transform: rotate(1530deg);}}
+@keyframes rollend_3 { from {transform: rotate(0);} to {transform: rotate(1530deg);}}
+	#disc{
+		width: 540px;
+		height: 540px;
+		background: transparent url('roulette.png') no-repeat center center;
+		background-size: 540px 540px;
+		border-radius: 50%;
+	}
+
+	#disc.rolling{
+		-webkit-animation-duration: 1s;
+		-ms-animation-duration: 1s;
+		animation-duration: 1s;
+		-webkit-animation-name: rolling;
+		-ms-animation-name: rolling;
+		animation-name: rolling;
+		-webkit-animation-timing-function: linear;
+		-ms-animation-timing-function: linear;
+		animation-timing-function: linear;
+		-webkit-animation-iteration-count: infinite;
+		-ms-animation-iteration-count: infinite;
+		animation-iteration-count: infinite;
+	}
+	#disc.rollend{
+		-webkit-animation-duration: 3.5s;
+		-ms-animation-duration: 3.5s;
+		animation-duration: 3.5s;
+		-webkit-animation-timing-function: ease-out;
+		-ms-animation-timing-function: ease-out;
+		animation-timing-function: ease-out;
+		-webkit-animation-iteration-count: 1;
+		-ms-animation-iteration-count: 1;
+		animation-iteration-count: 1;
+	}
+	#disc.rollend_0{
+		-webkit-animation-name: rollend_0;
+		-ms-animation-name: rollend_0;
+		animation-name: rollend_0;
+	}
+	#disc.rollend_1{
+		-webkit-animation-name: rollend_1;
+		-ms-animation-name: rollend_1;
+		animation-name: rollend_1;
+		-webkit-transform: rotate(1470deg);
+		-ms-transform: rotate(1470deg);
+		transform: rotate(1470deg);
+	}
+	#disc.rollend_2{
+		-webkit-animation-name: rollend_2;
+		-ms-animation-name: rollend_2;
+		animation-name: rollend_2;
+		-webkit-transform: rotate(1410deg);
+		-ms-transform: rotate(1410deg);
+		transform: rotate(1410deg);
+	}
+	#disc.rollend_3{
+		-webkit-animation-name: rollend_3;
+		-ms-animation-name: rollend_3;
+		animation-name: rollend_3;
+		-webkit-transform: rotate(1530deg);
+		-ms-transform: rotate(1530deg);
+		transform: rotate(1530deg);
+	}
+
+
+	#btn{
+		width: 184px;
+		height: 221px;
+		background: transparent url('button.png') no-repeat center top;
+		background-size: 184px auto;
+		position: absolute;
+		left: 50%;
+		margin-left: -92px;
+		top: 50%;
+		margin-top: -129px;
+	}
+	#btn.over{
+		-webkit-transform: scale(0.92);
+		transform: scale(0.92);
+	}
+	#mask{
+		position: fixed;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background-color: rgba(0,0,0, 0.5);
+		display: none;
+	}
+	.alerter{
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		width: 266px;
+		height: 195px;
+		margin-left: -133px;
+		margin-top: -97px;
+		background-color: #fff;
+		border-radius: 6px;
+		text-align: center;
+	}
+	.icon{
+		position: absolute;
+		top: -50px;
+		left: 50%;
+		margin-left: -50px;
+		width: 100px;
+		height: 100px;
+		background: #fff url('icon.png') no-repeat 0 0;
+		border-radius: 50%;
+		background-size: 100px auto;
+	}
+	.icon_1,.icon_2,.icon_3,.icon_4{
+		background-position: 0 -200px;
+	}
+	.icon_5{
+		background-position: 0 -100px;
+	}
+	.alerter h2{
+		padding-top: 59px;
+		font-size: 24px;
+		color: #744746;
+		line-height: 1.2em;
+		margin: 0;
+	}
+	.alerter p{
+		font-size: 13px;
+		color: #a26564;
+	}
+	#ok{
+		display: inline-block;
+		background-color: #d52012;
+		color: #fff;
+		font-size: 20px;
+		height: 1.71em;
+		line-height: 1.71em;
+		width: 9em;
+		border-radius: 0.855em;
+		text-decoration: none;
+	}
+</style>
+<body>
+	<div id="cosmetic">
+		<div id="roulette">
+			<div id="disc"></div>
+			<div id="btn"></div>
+		</div>
+	</div>
+	<div id="mask">
+		<div class="alerter">
+			<div class="icon icon_0"></div>
+			<h2>抽过奖啦</h2>
+			<p>每个账号只能参与一次抽奖哦~！</p>
+			<a href="#" id="ok">确定</a>
+		</div>
+	</div>
+<script type="text/javascript">
+
+	$(function(){
+		var $disc = $('#disc'), nextFrame = window.requestAnimationFrame ||
+			window.mozRequestAnimationFrame ||
+			window.webkitRequestAnimationFrame ||
+			window.msRequestAnimationFrame ||
+			function(fn){return setTimeout(fn, 16)},
+			reqTimeout, req;
+
+		$('#btn').on('touchstart', function(){
+			$(this).addClass('over');
+		}).on('touchend', function(){
+			$(this).removeClass('over');
+		}).click(function(){
+			$disc.attr('class', 'rollstart');
+			$(this).unbind('click');
+			nextFrame(function(){$disc.attr('class','rolling');});
+
+			reqTimeout = setTimeout(function(){
+				if(req && req.abort) req.abort();
+				nextFrame(function(){$disc.attr('class', 'rollend rollend_0');});
+				setTimeout(function(){showAlerter(4)}, 4500);
+			}, 10000);
+
+			req = $.getJSON('../service/lottery.php?'+(location.href.split('?')[1]||''), function(r){
+				if(reqTimeout)clearTimeout(reqTimeout);
+
+				var discClass = 'rollend rollend_', p = 0;
+				if(r && r.prize && r.prize < 4 ){
+					discClass+=r.prize;
+				}else{
+					discClass+=0;
+				}
+				nextFrame(function(){$disc.attr('class', discClass);});
+
+				setTimeout(function(){showAlerter(r.prize||0)}, 4500);
+			});
+		});
+		$('#mask').on('click', '#ok', function(){
+			$('#mask').fadeOut();
+		});
+	});
+	function showAlerter(p){
+		var title, sentens;
+		switch(p){
+			case 1:
+				title = "哇！中了一等奖啦！";
+				sentens = "带着这个页面去向工作人员领取奖品吧";
+				break;
+			case 2:
+				title = "哇！中了二等奖啦！";
+				sentens = "带着这个页面去向工作人员领取奖品吧";
+				break;
+			case 3:
+				title = "哇！中了三等奖啦！";
+				sentens = "带着这个页面去向工作人员领取奖品吧";
+				break;
+			case 4:
+				title = "谢谢您的参与！";
+				sentens = "差一点就中奖了呦！";
+				break;
+			case 0:
+				title = "抽过奖啦";
+				sentens = "每个账号只能参与一次抽奖哦~！";
+				break;
+			default:
+				title = "没有中奖哦";
+				sentens = "很遗憾，差一点就中奖了！";
+				p = 5;
+		}
+		$('#mask').html(['<div class="alerter">',
+				'<div class="icon icon_'+p+'"></div>',
+				'<h2>'+title+'</h2>',
+				'<p>'+sentens+'~！</p>',
+				'<a href="#" id="ok">确定</a>',
+			'</div>'].join('')).fadeIn();
+	}
+</script>
+<img src="icon.png" alt="" style="position: absolute; width: 1px; bottom:0; opacity: 0; " />
+</body>
+</html>
