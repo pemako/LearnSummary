@@ -15,10 +15,16 @@ __author__ = ["pemako <pemakoa@gmail.com>"]
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 from email.MIMEImage import MIMEImage
-import sys, os, time, smtplib, __main__
+import sys
+import os
+import time
+import smtplib
+import __main__
+
 
 class SmtpEmailTool(object):
     """发送内容格式为 html 的邮件工具"""
+
     def __init__(self, server, user, password, owner='unknow'):
         """初始化
         Args:
@@ -31,7 +37,7 @@ class SmtpEmailTool(object):
         self.mailPassword = password
         self.mailOwner = owner
 
-    def sendEmail(self, toAdd, subject, htmlText, retryCount = 3):
+    def sendEmail(self, toAdd, subject, htmlText, retryCount=3):
         """发送邮件
         Args:
             toAdd - list of email receivers
@@ -41,18 +47,27 @@ class SmtpEmailTool(object):
             retryCount - 重试次数，默认三次; 重试间隔默认五秒，暂不提供配置入口
         """
         msgRoot = MIMEMultipart('related')
-        msgRoot['Subject'] = isinstance(subject, str) and subject.decode('UTF-8') or subject
+        msgRoot['Subject'] = isinstance(
+            subject, str) and subject.decode('UTF-8') or subject
         msgRoot['From'] = self.mailUserName
         msgRoot['To'] = ','.join(toAdd)
         msgRoot['X-PEMAKO-OWNER'] = self.mailOwner
-        try: msgRoot['X-PEMAKO-HOST'] = os.uname()[1]
-        except: msgRoot['X-PEMAKO-HOST'] = 'unknown'
-        try: msgRoot['X-PEMAKO-USER'] = os.environ['USER']
-        except: msgRoot['X-PEMAKO-USER'] = 'unknown'
-        try: msgRoot['X-PEMAKO-PWD'] = os.environ['PWD']
-        except: msgRoot['X-PEMAKO-PWD'] = 'unknown'
-        try: msgRoot['X-PEMAKO-SCRIPT'] = os.path.basename(__main__.__file__)
-        except: msgRoot['X-PEMAKO-SCRIPT'] = 'unknown'
+        try:
+            msgRoot['X-PEMAKO-HOST'] = os.uname()[1]
+        except:
+            msgRoot['X-PEMAKO-HOST'] = 'unknown'
+        try:
+            msgRoot['X-PEMAKO-USER'] = os.environ['USER']
+        except:
+            msgRoot['X-PEMAKO-USER'] = 'unknown'
+        try:
+            msgRoot['X-PEMAKO-PWD'] = os.environ['PWD']
+        except:
+            msgRoot['X-PEMAKO-PWD'] = 'unknown'
+        try:
+            msgRoot['X-PEMAKO-SCRIPT'] = os.path.basename(__main__.__file__)
+        except:
+            msgRoot['X-PEMAKO-SCRIPT'] = 'unknown'
         msgRoot.preamble = 'This is a multi-part message in MIME format.'
 
         # Encapsulate the plain and HTML versions of the message body in an
@@ -60,43 +75,46 @@ class SmtpEmailTool(object):
         msgAlternative = MIMEMultipart('alternative')
         msgRoot.attach(msgAlternative)
 
-        #设定HTML信息
+        # 设定HTML信息
         msgText = MIMEText(htmlText, 'html', 'utf-8')
         msgAlternative.attach(msgText)
 
-        #设定内置图片信息 定义图片 ID 在 html 中引用，如本图片 id=image1
-        #则在 html 中 引用为 <img src="cid:image1">
+        # 设定内置图片信息 定义图片 ID 在 html 中引用，如本图片 id=image1
+        # 则在 html 中 引用为 <img src="cid:image1">
         #fp = open('test.png', 'rb')
         #msgImage = MIMEImage(fp.read())
-        #fp.close()
+        # fp.close()
         #msgImage.add_header('Content-ID', '<image1>')
-        #msgRoot.attach(msgImage)
-       
-        #设定附件内容 构造附件1传送当前文件夹下的 a.txt 文件
+        # msgRoot.attach(msgImage)
+
+        # 设定附件内容 构造附件1传送当前文件夹下的 a.txt 文件
         #att1 = MIMEText(open('a.txt', 'rb').read(), 'base64', 'utf-8')
         #att1['Content-type'] = 'application/octet-stream'
-        #这里的额 filename 可以任意写，写什么名字，邮件中显示什么名字
+        # 这里的额 filename 可以任意写，写什么名字，邮件中显示什么名字
         #att1['Content-Disposition'] = 'attachment; filename="a.txt"'
-        #msgRoot.attach(att1)
-
+        # msgRoot.attach(att1)
 
         while retryCount > 0:
             try:
-                #发送邮件
+                # 发送邮件
                 smtp = smtplib.SMTP()
-                #设定调试级别，依情况而定
-                smtp.set_debuglevel(0) # 0 close debug info
+                # 设定调试级别，依情况而定
+                smtp.set_debuglevel(0)  # 0 close debug info
                 smtp.connect(self.mailServer)
                 smtp.login(self.mailUserName, self.mailPassword)
                 smtp.sendmail(self.mailUserName, toAdd, msgRoot.as_string())
                 break
             except Exception, e:
                 retryCount -= 1
-                sys.stderr.write('error sending mail, retries left: %d, exInfo: %r\n' % (retryCount, e))
+                sys.stderr.write(
+                    'error sending mail, retries left: %d, exInfo: %r\n' % (retryCount, e))
                 time.sleep(5)
             finally:
-                try: smtp.quit()
-                except: pass
+                try:
+                    smtp.quit()
+                except:
+                    pass
+
 
 if __name__ == "__main__":
     toAdd = ['731482121@qq.com']
@@ -105,9 +123,8 @@ if __name__ == "__main__":
             <div><b>图片笑话</b><img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/logo_white_fe6da1ec.png"></div>'
 
     emailTools = SmtpEmailTool(
-            server='',
-            user='',
-            password="")
+        server='',
+        user='',
+        password="")
 
     emailTools.sendEmail(toAdd, subject, htmlText)
-

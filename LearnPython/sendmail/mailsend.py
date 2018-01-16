@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- encoding=utf-8 -*- 
+# -*- encoding=utf-8 -*-
 
 '''mailsend.py
 邮件发送模块
@@ -8,6 +8,7 @@
 import email.mime.text
 import email.mime.multipart
 import smtplib
+
 
 class MailSender:
     def __init__(self, server, user, password):
@@ -37,9 +38,9 @@ class MailSender:
         msg_alt.attach(msg_txt)
         msg_root.attach(msg_alt)
 
-        #发送邮件
+        # 发送邮件
         smtp = smtplib.SMTP()
-        #设定调试级别，依情况而定
+        # 设定调试级别，依情况而定
         smtp.set_debuglevel(0)
         smtp.connect(self.__mail_server)
         smtp.login(self.__mail_user, self.__mail_password)
@@ -47,10 +48,10 @@ class MailSender:
         smtp.quit()
 
 
-if __name__ == '__main__' :
+if __name__ == '__main__':
     to_addrs = ['pemakoa@gmail.com']
     subject = '邮件主题'
     html_txt = '<B>HTML正文文本</B><img src="" />'
 
-    ms = MailSender(server='',user='',password="")
+    ms = MailSender(server='', user='', password="")
     ms.send(to_addrs, subject, html_txt)
