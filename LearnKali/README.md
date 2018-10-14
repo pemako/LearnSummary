@@ -39,7 +39,7 @@ BuildVersion:	18A391
 
 ## 安装设置
 
-参照(https://study.163.com/course/courseMain.htm?courseId=1005094023) 课程进行kali的第一次全面设置主要包括下面内容
+[参照](https://study.163.com/course/courseMain.htm?courseId=1005094023) 课程进行kali的第一次全面设置主要包括下面内容
 
 ### 安装
 
