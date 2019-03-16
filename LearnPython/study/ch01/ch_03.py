@@ -12,4 +12,3 @@ if __name__ == '__main__':
 
     print str("Hello, world!")
     print str(1000L)
-    

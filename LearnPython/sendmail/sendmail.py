@@ -12,13 +12,14 @@ TODO:附件的发送 和 HTML 中图片的发送进行优化
 
 __author__ = ["pemako <pemakoa@gmail.com>"]
 
+import os
+import smtplib
+import sys
+import time
+from email.MIMEImage import MIMEImage
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
-from email.MIMEImage import MIMEImage
-import sys
-import os
-import time
-import smtplib
+
 import __main__
 
 

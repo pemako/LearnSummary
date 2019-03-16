@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import urllib2
-import json
-import sys
-import os
-import time
-import random
 import base64
+import json
+import os
+import random
+import sys
+import time
+import urllib2
+
 import requests
+
 from sendmail import SmtpEmailTool
 
 

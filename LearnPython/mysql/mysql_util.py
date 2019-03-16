@@ -20,12 +20,13 @@ rows = MU.fetchall('online_db', sql, params)
 务，建议使用django
 """
 
-import time
-import MySQLdb
-from MySQLdb import OperationalError
-import threading
 import logging
 import logging.config
+import threading
+import time
+
+import MySQLdb
+from MySQLdb import OperationalError
 
 _conn_map = {}
 

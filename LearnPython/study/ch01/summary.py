@@ -14,6 +14,3 @@ if __name__ == '__main__':
     print float(12.7)
     print str(1313)
     help() # 提供交互帮助
-    
-
-

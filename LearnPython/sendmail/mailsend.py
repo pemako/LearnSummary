@@ -5,8 +5,8 @@
 邮件发送模块
 '''
 
-import email.mime.text
 import email.mime.multipart
+import email.mime.text
 import smtplib
 
 

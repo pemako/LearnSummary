@@ -4,6 +4,13 @@
 # string 串 find 查抄字符串中是否的子串的位置，返回找到的位置
 # 如果没有找到 返回-1
 import string
+# translate 在使用的时候需要先指定一个转换表
+# 转换表的关系是以某个字符替换为对应字符的关系
+# 如需要把c->k ， s->z ，在 string 模块中使用
+# maketrans 函数就行
+# 转换表是包含替换 ASICC 字符集中256个字符的替
+# 换字母的字符串
+from string import maketrans
 
 streg = "This is a example string"
 print streg.find('a', 0, 2)
@@ -34,13 +41,6 @@ print streg.split(' ')
 # strip 去除字符串两端的空格
 print " this is  ".strip()
 
-# translate 在使用的时候需要先指定一个转换表
-# 转换表的关系是以某个字符替换为对应字符的关系
-# 如需要把c->k ， s->z ，在 string 模块中使用
-# maketrans 函数就行
-# 转换表是包含替换 ASICC 字符集中256个字符的替
-# 换字母的字符串
-from string import maketrans
 table = maketrans('cs', 'kz')
 print len(table)
 print table

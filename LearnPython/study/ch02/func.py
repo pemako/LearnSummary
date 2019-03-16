@@ -40,4 +40,3 @@ if __name__ == '__main__':
     print name
 
     print name.count('bbb')
-

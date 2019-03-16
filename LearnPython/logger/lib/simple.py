@@ -1,14 +1,14 @@
-#! /usr/bin/env python
+# !/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
-import sys
-import time
-import signal
-import logging
-import logging.config
 import argparse
 import ConfigParser
+import logging
+import logging.config
+import os
+import signal
+import sys
+import time
 
 
 class SimpleService(object):

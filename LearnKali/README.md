@@ -142,3 +142,17 @@ BuildVersion:	18A391
 - 第一次快照
 	- 20181114 包含上面所有内容
 
+
+## 相关工具实战
+
+### 子域名探测
+
+- 根据顶级域名搜索子域名
+	- dnsenum -f /usr/share/dnsenum/dns.txt aqlab.cn(需要探测的域名)
+- 收集子域名和端口
+	- nmap shop.aqlab.cn (直接添加需要扫描的额域名或iP,只显示非闭合的端口)
+	- nmap -p 80,81,8001 （制定端口扫描）
+- awvs web扫描工具
+- sqlmap 
+
+

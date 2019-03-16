@@ -1,4 +1,5 @@
-package typeinfo;//: typeinfo/InnerImplementation.java
+package typeinfo;
+//: typeinfo/InnerImplementation.java
 // Private inner classes can't hide from reflection.
 
 import typeinfo.interfacea.A;

@@ -19,6 +19,7 @@ y['machines'].remove('bar')
 print x, y
 
 from copy import deepcopy
+
 d = {}
 d['name'] = ['pemako', 'lena']
 c = d.copy()
@@ -41,5 +42,3 @@ print {}.fromkeys(['name','age'],'unknow')
 # get 方法 如果查找一个不存在的健时，不报错默认返回 None，可以指定默认值
 print {}.get('name')
 print {}.get('name', 'pemako')
-
-
