@@ -28,6 +28,55 @@ Server: Docker Engine - Community
 - 方式一 `brew cask install docker` 这种安装方式不带GUI存命令行操作
 - 方式二 下载 [Docker Desktop for Mac](https://hub.docker.com/editions/community/docker-ce-desktop-mac) 带一套可视化软件和Docker环境
 
+## 1、Docker 的安装和配置
+
+### 1.1 在Ubuntu中安装
+
+- 检查环境是否支持
+    - uname -a
+    - ls -l /sys/class/misc/device-mapper
+
+- 方式一 版本比较旧
+	- `sudo apt-get install -y docker.io`
+	- `source /etc/bash_completion.d/docker.io`
+
+- 方式二
+	- 检查APT的https支持，查看/usr/lib/apt/methods/https 文件是否存在
+	    - apt-get update
+	    - apt-get install -y apt-transport-https
+	- 添加Docker的APT仓库
+		- echo deb https://get.docker.com/ubuntu docker main >/etc/apt/sources.list.d/docker.list
+	- 添加仓库的key
+		- apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+	- 安装
+		- apt-get update
+		- apt-get install -y lxc-docker
+
+- Docker提供的简易安装方式
+	- sudo apt-get install-y curl
+	- curl -sSL https://get.docker.com/ | sudo sh 
+
+- 新版本Docker安装
+	- [参考官网文档](https://docs.docker-cn.com/engine/installation/linux/docker-ce/ubuntu/)
+
+- 使用非root用户
+	- sudo groupadd docker
+	- sudo gpasswd -a user docker
+	- sudo service docker restart
+
+
+### 1.2 在window中安装
+
+- 旧版本Docker
+
+- 新版本Docker
+	- 直接下载windows的docker进行安配置即可
+	- [参考](https://docs.docker-cn.com/docker-for-windows/install/#start-docker-for-windows)
+
+### 1.3 在MacOS中安装
+
+- [参考官网文档](https://docs.docker-cn.com/docker-for-mac/install/#install-and-run-docker-for-mac)
+
 
 ## 2、Docker 简介
 
@@ -557,58 +606,8 @@ Server: Docker Engine - Community
 
 - `docker run --volumes-from [container name] -v $(pwd):/backup ubuntu tar xvf /backup.tar [container data volume]`
 
-## 5、Docker 的安装和配置
 
-### 5.1 在Ubuntu中安装
-
-- 检查环境是否支持
-    - uname -a
-    - ls -l /sys/class/misc/device-mapper
-
-- 方式一 版本比较旧
-	- `sudo apt-get install -y docker.io`
-	- `source /etc/bash_completion.d/docker.io`
-
-- 方式二
-	- 检查APT的https支持，查看/usr/lib/apt/methods/https 文件是否存在
-	    - apt-get update
-	    - apt-get install -y apt-transport-https
-	- 添加Docker的APT仓库
-		- echo deb https://get.docker.com/ubuntu docker main >/etc/apt/sources.list.d/docker.list
-	- 添加仓库的key
-		- apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-	- 安装
-		- apt-get update
-		- apt-get install -y lxc-docker
-
-- Docker提供的简易安装方式
-	- sudo apt-get install-y curl
-	- curl -sSL https://get.docker.com/ | sudo sh 
-
-- 新版本Docker安装
-	- [参考官网文档](https://docs.docker-cn.com/engine/installation/linux/docker-ce/ubuntu/)
-
-- 使用非root用户
-	- sudo groupadd docker
-	- sudo gpasswd -a user docker
-	- sudo service docker restart
-
-
-### 5.2 在window中安装
-
-- 旧版本Docker
-
-- 新版本Docker
-	- 直接下载windows的docker进行安配置即可
-	- [参考](https://docs.docker-cn.com/docker-for-windows/install/#start-docker-for-windows)
-
-### 5.3 在MacOS中安装
-
-- [参考官网文档](https://docs.docker-cn.com/docker-for-mac/install/#install-and-run-docker-for-mac)
-
-
-
-#### 参考
+## 参考
 
 - 1、[https://www.jishuwen.com/d/2ETn](https://www.jishuwen.com/d/2ETn)
 - 2、[https://yeasy.gitbooks.io/docker_practice/](https://yeasy.gitbooks.io/docker_practice/)
@@ -618,6 +617,6 @@ Server: Docker Engine - Community
 - 6、[https://www.raywenderlich.com/9159-docker-on-macos-getting-started](https://www.raywenderlich.com/9159-docker-on-macos-getting-started)
 - 7、[https://pjw.io/articles/2018/04/25/access-to-the-container-network-of-docker-for-mac/](https://pjw.io/articles/2018/04/25/access-to-the-container-network-of-docker-for-mac/)
 
-#### 待学习
+## 待学习
 
 - Github + Docker Hub 实现自动构建镜像 [https://blog.csdn.net/bbwangj/article/details/82084480](https://blog.csdn.net/bbwangj/article/details/82084480)
