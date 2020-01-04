@@ -1,60 +1,67 @@
-// author <pemakoa@gmail.com>
-// 内存的动态分配 使用指针来计算质数
-
+// Program 7.10  Understand pointers to your hat size - if you dare
+#define __STDC_WANT_LIB_EXT1__ 1
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
 
 int main(void)
 {
-	unsigned long long *pPrimes = NULL;
-	unsigned long long trial = 0;
-	bool found = false;
-	int total = 0;
-	int count = 0;
-	
+  char size[3][12] = {                // Hat sizes as characters 
+       {'6', '6', '6', '6', '7', '7', '7', '7', '7', '7', '7', '7'},
+       {'1', '5', '3', '7', ' ', '1', '1', '3', '1', '5', '3', '7'},
+       {'2', '8', '4', '8', ' ', '8', '4', '8', '2', '8', '4', '8'}
+                     };
 
-	printf("How many primes would you loke - you'll get at least 4? ");
-	scanf("%d", &total);
-	total = total < 4 ? 4 : total;
+   int headsize[12] =                  // Values in 1/8 inches
+       {164,166,169,172,175,178,181,184,188,191,194,197};
 
-	pPrimes = (unsigned long long*)malloc(total*sizeof(unsigned long long));
-	if (!pPrimes)
-	{
-		printf("Not enough memory. It's the end I'm afraid.\n");
-		return 1;
-	}
+  char *psize = *size;
+  int *pheadsize = headsize;
 
-	*pPrimes = 2ULL;
-	*(pPrimes + 1) = 3ULL;
-	*(pPrimes + 2) = 5ULL;
-	count = 3;
-	trial = 5ULL;
+  float cranium = 0.0;                // Head circumference in decimal inches
+  int your_head = 0;                  // Headsize in whole eighths
+  bool hat_found = false;             // Indicates when a hat is found to fit
 
-	while(count < total) {
-		trial += 2ULL;
+  // Get the circumference of the head 
+  printf("\nEnter the circumference of your head above your eyebrows"
+                                     " in inches as a decimal value: ");
+  scanf_s(" %f", &cranium);
 
-		for (int i = 0; i < count; ++i) {
-			if (!(found = (trial % *(pPrimes + i)))) break;
-		}
+  your_head = (int)(8.0*cranium);      // Convert to whole eighths of an inch
 
-		if(found) 
-			*(pPrimes + count++) = trial;
-	}
+  /*****************************************************************
+   * Search for a hat size:                                        *
+   * Either your head corresponds to the 1st head_size element or  *
+   * a fit is when your_head is greater that one headsize element  *
+   * and less than or equal to the next.                           *
+   * In this case the size is the second headsize value.           *
+   *****************************************************************/
+  unsigned int i = 0;                  // Loop counter
+  if(your_head == *pheadsize)          // Check for min size fit 
+    hat_found = true;
+  else 
+    // Find head size in the headsize array
+    for (i = 1 ; i < sizeof(headsize)/sizeof(*headsize) ; ++i)   
+      if(your_head > *(pheadsize + i - 1) && your_head <= *(pheadsize + i))
+      {
+        hat_found = true;
+         break;
+      }
 
-	for (int i = 0; i < total; ++i)
-	{
-		printf("%12llu", *(pPrimes + i));
-		if (!((i + 1) % 5))
-		{
-			printf("\n");
-		}
-	}
-	printf("\n");
-
-	free(pPrimes);
-	pPrimes = NULL;
-
-	return 0;
+  if(hat_found)
+    printf("\nYour hat size is %c %c%c%c\n",
+                      *(psize + i),                        // First row of size
+                      *(psize + 1*sizeof(*size) + i),      // Second row of size
+                      (i==4) ?' ' : '/',
+                      *(psize + 2*sizeof(*size) + i));     // Third row of size
+  // If no hat was found, the head is too small, or too large
+  else
+  {
+    if(your_head < *pheadsize)        // check for too small
+      printf("\nYou are the proverbial pinhead. No hat for"
+                                                 " you I'm afraid.\n");
+    else                               // It must be too large
+      printf("\nYou, in technical parlance, are a fathead."
+                                  " No hat for you, I'm afraid.\n");
+  }
+  return 0;
 }
-

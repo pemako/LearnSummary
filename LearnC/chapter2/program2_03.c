@@ -1,14 +1,15 @@
-// Program 2.3 Using more Variables
+// Program 2.3 Using more variables 
 #include <stdio.h>
 
-int main(void) 
+int main(void)
 {
-    int brothers;
-    int birdes;
+  int brothers;                             // Declare a variable called brothers
+  int brides;                               // and a variable called brides
 
-    brothers = 7;
-    birdes = 7;
+  brothers = 7;                             // Store 7 in the variable brothers
+  brides = 7;                               // Store 7 in the variable brides
 
-    printf("%d birdes for %d brothers\n", birdes, brothers);   
-    return 0;
+  // Display some output
+  printf("%d brides for %d brothers\n", brides, brothers);
+  return 0;
 }

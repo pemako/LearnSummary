@@ -30,8 +30,7 @@ int main(void)
   // The main calculator loop
   while(strcmp(fgets(buf, BUF_LEN, stdin), "quit\n") != 0)
   {
-    // buf_length = strnlen_s(buf, BUF_LEN);                      // Get the input string length
-    buf_length = strlen(buf);                      // Get the input string length
+    buf_length = strnlen_s(buf, BUF_LEN);                      // Get the input string length
     buf[--buf_length] = '\0';                                  // Remove newline at the end 
 
     // Remove spaces from the input by copying the string to itself
@@ -39,8 +38,7 @@ int main(void)
       if(*(buf + index) != ' ')                                // If it's not a space...
         *(buf + to++) = *(buf + index);                        // ...copy the character
 
-    // buf_length = strnlen_s(buf, BUF_LEN);                      // Get the new string length 
-    buf_length = strlen(buf);                      // Get the new string length 
+    buf_length = strnlen_s(buf, BUF_LEN);                      // Get the new string length 
 
     index = 0;                                                 // Start at the first character
    if(buf[index]== '=')                                        // If there's = ...  

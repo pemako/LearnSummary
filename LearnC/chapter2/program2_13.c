@@ -1,24 +1,22 @@
+// Program 2.13 Choosing the correct type for the job  1
 #include <stdio.h>
 
 int main(void)
 {
-    const float Revenue_Per_150 = 4.5f;
-    short JanSold = 23500;
-    short FebSold = 19300;
-    short MarSold = 21600;
-    float RevQuarter = 0.0f;
+  const float Revenue_Per_150 = 4.5f;
+  short JanSold = 23500;                               // Stock sold in January
+  short FebSold = 19300;                               // Stock sold in February
+  short MarSold = 21600;                               // Stock sold in March
+  float  RevQuarter = 0.0f;                            // Sales for the quarter
 
-    //short QuarterSold = JanSold + FebSold + MarSold;
-    unsigned long QuarterSold = JanSold + FebSold + MarSold;
+  short QuarterSold = JanSold + FebSold + MarSold;     // Calculate quarterly total
 
-    printf("Stock sold in\n Jan:%d\nFeb: %d\nMar: %d\n", JanSold, FebSold, MarSold);
+  // Output monthly sales and total for the quarter 
+  printf("Stock sold in\n Jan: %d\n Feb: %d\n Mar: %d\n", JanSold, FebSold, MarSold);
+  printf("Total stock sold in first quarter: %d\n", QuarterSold);
 
-    //printf("Total stock sold in first quarter: %d\n", QuarterSold); // -1136
-    printf("Total stock sold in first quarter: %lu\n", QuarterSold); // -1136
-
-    //RevQuarter = QuarterSold / 150 * Revenue_Per_150 ;
-    RevQuarter = QuarterSold * Revenue_Per_150 / 150;
-    printf("Sales revenue this quarter is : $%.2f\n", RevQuarter);
-
-    return 0;
+  // Calculate the total revenue for the quarter and output it 
+   RevQuarter = QuarterSold/150*Revenue_Per_150;
+  printf("Sales revenue this quarter is:$%.2f\n", RevQuarter);
+  return 0;
 }

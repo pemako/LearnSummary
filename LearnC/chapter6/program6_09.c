@@ -1,35 +1,34 @@
-// author <pemakoa@gmail.com>
-// Saturday, June 18, 2016 23:25:54 GMT+8
-
-// 判断从键盘上输入的一个字符串中有多少个数字、字母和标点符号
+// Program 6.9 Finding occurrences of one string in another
+#define __STDC_WANT_LIB_EXT1__ 1       // Make optional versions of functions available
 #include <stdio.h>
+#include <string.h>
 #include <ctype.h>
-#define BUF_SIZE 100
+#define TEXT_LEN 100                   // Maximum input text length
+#define SUBSTR_LEN 40                  // Maximum substring length
 
 int main(void)
 {
-	char buf[BUF_SIZE];
-	int nLetters = 0;
-	int nDigits = 0;
-	int nPunct = 0;
+  char text[TEXT_LEN];                 // Input buffer for string to be searched
+  char substring[SUBSTR_LEN];          // Input buffer for string sought 
 
-	printf("Enter an interestring string of less than %d characters:\n", BUF_SIZE );
+  printf("Enter the string to be searched (less than %d characters):\n", TEXT_LEN);
+  fgets(text, TEXT_LEN, stdin);
 
-	if (!fgets(buf, sizeof(buf)))
-	{
-		printf("Error reading string\n");
-		return 1;
-	}
-	size_t i = 0;
-	while(buf[i]) {
-		if(isalpha(buf[i])) ++nLetters;
-		else if(isdigit(buf[i])) ++nDigits;
-		else if(ispunct(buf[i])) ++nPunct;
-		++i;
-	}
+  printf("\nEnter the string sought (less than %d characters):\n", SUBSTR_LEN);
+  fgets(substring, SUBSTR_LEN, stdin);
 
-	printf("\nYour string contained %d letters, %d digits and %d puctuntion characters.\n", 
-		nLetters, nDigits, nPunct);
+  printf("\nFirst string entered:\n%s\n", text);
+  printf("Second string entered:\n%s\n", substring);
 
-	return 0;
+  // Overwrite the newline character in each string
+  text[strnlen_s(text, TEXT_LEN) - 1] = '\0';
+  substring[strnlen_s(substring, SUBSTR_LEN) - 1] = '\0';
+ 
+  // Convert both strings to uppercase. 
+  for(int i = 0 ; (text[i] = toupper(text[i])) != '\0' ; ++i);
+  for(int i = 0 ; (substring[i] = toupper(substring[i])) != '\0' ; ++i);
+
+  printf("The second string %s found in the first.\n",
+              ((strstr(text, substring) == NULL) ? "was not" : "was"));
+  return 0;
 }

@@ -1,20 +1,26 @@
-// author <pemakoa@gmail.com>
-// Jun 13, 201622:39
-// 按位于操作
-
+// Program 3.10 Exercising bitwise operators 
 #include <stdio.h>
 
 int main(void)
 {
-	unsigned int original = 0xABC;
-	unsigned int result = 0;
-	unsigned int mask = 0xF;
+  unsigned int original = 0xABC;
+  unsigned int result = 0;
+  unsigned int mask = 0xF;    // Rightmost four bits
 
-	printf("\n original = %X\n", original);
+  printf("\n original = %X", original);
 
-	// Insert firset digit in result
-	result |= original & mask;
+  // Insert first digit in result
+  result |= original&mask;    // Put right 4 bits from original in result
 
-	printf("%X\n", result);
-	return 0;
+  // Get second digit
+  original >>= 4;             // Shift original right four positions
+  result <<= 4;               // Make room for next digit
+  result |= original&mask;    // Put right 4 bits from original in result
+
+  /* Get third digit */
+  original >>= 4;             // Shift original right four positions
+  result <<= 4;               // Make room for next digit
+  result |= original&mask;    // Put right 4 bits from original in result
+  printf("\t result = %X\n", result);
+  return 0;
 }

@@ -1,10 +1,10 @@
-// Program 2.2 Using a Variable?
+//  Program 2.2 Using a variable
 #include <stdio.h>
 
-int main(void) 
+int main(void)
 {
-    int saiary; // Declare a variable called salary
-    saiary = 10000; // Store 10000 in saiary
-    printf("My salary is %d.\n", saiary);
-    return 0;
+  int salary;                               // Declare a variable called salary
+  salary = 10000;                           // Store 10000 in salary
+  printf("My salary is %d.\n", salary);
+  return 0;
 }

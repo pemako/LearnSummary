@@ -1,24 +1,31 @@
-// author <pemakoa@gmail.com>
-// Saturday, June 18, 2016 23:02:54 GMT+8
-
+// Program 6.8 Testing characters in a string
+#define __STDC_WANT_LIB_EXT1__ 1   // Make optional versions of functions available
 #include <stdio.h>
-#include <string.h>
+#include <ctype.h>
+#define BUF_SIZE 100
 
 int main(void)
 {
-	char str1[] = "This string contains the holy grail.";
-	char str2[] = "the holy grail";
-	char str3[] = "the holy grill";
+  char buf[ BUF_SIZE];           // Input buffer
+  int nLetters = 0;              // Number of letters in input
+  int nDigits = 0;               // Number of digits in input
+  int nPunct = 0;                // Number of punctuation characters
 
-	if (strstr(str1, str2)) 
-		printf("\"%s\" found in \"%s\"\n", str2, str1);
-	else
-		printf("\"%s\" not found in \"%s\"\n", str2, str1);
+  printf("\nEnter an interesting string of less than %d characters:\n", BUF_SIZE);
+  gets_s(buf, sizeof(buf));      // Read a string into buffer
 
-	if (strstr(str1, str3))
-		printf("\"%s\" found in \"%s\"\n", str3, str1);
-	else
-		printf("\"%s\" found in \"%s\"\n", str3, str1);
-
-	return 0;
+  size_t i = 0;                  // Buffer index
+  while(buf[i])
+  {
+    if(isalpha(buf[i]))
+      ++nLetters;                // Increment letter count
+    else if(isdigit(buf[i]))
+      ++nDigits;                 // Increment digit count
+    else if(ispunct(buf[i]))
+      ++nPunct;
+    ++i;
+  }
+  printf("\nYour string contained %d letters, %d digits and %d punctuation characters.\n",
+                                              nLetters, nDigits, nPunct);
+  return 0;
 }

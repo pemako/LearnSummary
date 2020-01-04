@@ -1,14 +1,13 @@
-// author <pemakoa@gmail.com>
-// Jun 13, 201623:23
-
+// Program 4.2 Drawing a box
 #include <stdio.h>
 
 int main(void)
 {
-	int sum = 0;
-	for(int count = 1; count <= 100; count++) {
-		sum += count;
-	}	
-	printf("%d \n", sum);
-	return 0;
+  printf("\n**************");         // Draw the top of the box
+
+  for(int count = 1 ; count <= 8 ; ++count)
+    printf("\n*            *");       // Draw the sides of the box
+
+  printf("\n**************\n");       // Draw the bottom of the box
+  return 0;
 }

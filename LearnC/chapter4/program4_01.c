@@ -1,14 +1,13 @@
-// author <pemakoa@gmail.com>
-// Jun 13, 201623:23
-
+// Program 4.1 List ten integers
 #include <stdio.h>
 
 int main(void)
 {
-	int count = 1;
-	for(; count <= 10; count++) {
-		printf(" %d", count);
-	}	
-	printf("\n");
-	return 0;
+  int count = 1;
+  for( ; count <= 10 ; ++count)
+{
+    printf("  %d", count);
+}
+  printf("\nAfter the loop count has the value %d.\n", count);
+  return 0;
 }
