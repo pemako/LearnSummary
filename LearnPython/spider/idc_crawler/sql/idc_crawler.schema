@@ -1,0 +1,79 @@
+
+---- 国美产品分类一级分类
+CREATE TABLE `gm_goods_class` (
+  `pid` int(11) unsigned NOT NULL,
+  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '商品类别名称',
+  PRIMARY KEY (`pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+---- 国美产品类别二级分类和三级分类
+CREATE TABLE `gm_goods_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` int(11) unsigned NOT NULL COMMENT '关联goods_class 表的 pid',
+  `goods_id` varchar(32) NOT NULL DEFAULT '' COMMENT '二级分类类别id',
+  `goods_name` varchar(64) NOT NULL DEFAULT '' COMMENT '二级分类的类别名称',
+  `c_goods_id` varchar(128) NOT NULL DEFAULT '' COMMENT '三级分类类别id',
+  `c_goods_name` varchar(64) NOT NULL DEFAULT '' COMMENT '三级分类的类别名称',
+  `c_goods_imgurl` varchar(1024) NOT NULL DEFAULT '' COMMENT '三级分类图片地址',
+  `c_goods_url` varchar(1024) NOT NULL DEFAULT '' COMMENT '三级分类的类别名称',
+  `create_time` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `last_update` bigint(20) NOT NULL DEFAULT '0' COMMENT '最后更新时间',
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=923 DEFAULT CHARSET=utf8;
+
+
+---- 国美产品的具体信息
+CREATE TABLE `gm_goods_product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `gid` int(11) unsigned NOT NULL COMMENT '关联goods_category 表的 id,表明该商品所属是哪一个具体分类',
+  `pid` varchar(64) NOT NULL DEFAULT '0' COMMENT '具体该产品的 ID 信息，目前是从 产品链接中获取的 //item.m.gome.com.cn/product-9140001149-1130010999.html 中间的 9140001149 值',
+  `img` varchar(1024) NOT NULL DEFAULT '0' COMMENT '具体产品的图片信息，多个图片之间使用逗号分隔',
+  `title` varchar(2028) NOT NULL DEFAULT '0' COMMENT '产品的展示的 title 信息',
+  `addesc` varchar(2048) NOT NULL DEFAULT '0' COMMENT '产品的具体描述信息',
+  `groupon_price` varchar(32) NOT NULL DEFAULT '0' COMMENT '团购价',
+  `price` varchar(32) NOT NULL DEFAULT '0' COMMENT '正常价',
+  `evaluate` bigint(20) NOT NULL DEFAULT '0' COMMENT '评价数',
+  `good_comment` varchar(32) NOT NULL DEFAULT '0' COMMENT '好评度，为<100的整数 展示使用%',
+  `cnum` int(11) NOT NULL DEFAULT '1' COMMENT '第几次抓取',
+  `purl` varchar(1024) NOT NULL COMMENT '产品的地址 URL',
+  `gm_self_support` int(11) NOT NULL DEFAULT '0' COMMENT '是否为国美自营 默认为0 1 自营',
+  `evaluate_img` text NOT NULL COMMENT '评论中的图片',
+  `create_time` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `last_update` bigint(20) NOT NULL DEFAULT '0' COMMENT '最后更新时间',
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+---- 产品详情视图
+CREATIVE VIEW gm_product_info_new AS
+SELECT 
+    p.id as id, 
+    c.pid as first_class_id, 
+    c.name as first_class_name, 
+    ca.goods_id as second_class_id, 
+    ca.goods_name as second_class_name, 
+    ca.c_goods_id as third_class_id, 
+    ca.c_goods_name as third_class_name, 
+    ca.c_goods_imgurl as third_class_img, 
+    p.pid as product_id, 
+    p.title as product_title, 
+    p.addesc as product_addesc, 
+    p.price as product_price, 
+    p.evaluate as product_evaluate, 
+    p.groupon_price as product_groupon_price, 
+    p.good_comment as product_comment, 
+    p.img as product_img,
+    p.purl as product_url,
+    p.gm_self_support as gm_self_support,
+    p.evaluate_img as product_evaluate_img,
+    p.cnum as crawler_num
+FROM
+    gm_goods_class c, 
+    gm_goods_category ca, 
+    gm_goods_product p 
+WHERE
+    c.pid = ca.pid and 
+    ca.id = p.gid;

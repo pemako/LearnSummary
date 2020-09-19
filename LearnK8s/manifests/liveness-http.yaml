@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: liveness-httpget-pod
+  namespace: default
+spec:
+  containers:
+  - name: liveness-httpget-container
+    image: ikubernetes/myapp:v1
+    imagePullPolicy: IfNotPresent
+    ports:
+    - name: http
+      containerPort: 80
+    livenessProbe:
+      httpGet:
+        port: http
+        path: /index.html
+      initialDelaySeconds: 1
+      periodSeconds: 3

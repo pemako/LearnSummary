@@ -1,0 +1,27 @@
+# log dir
+log
+
+# deploy package
+target
+
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+__pycache__/
+
+# Unit test / coverage reports
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Django stuff:
+*.log
+*.pot
+
+# C extensions
+*.so
+
+*.swp
+*.data
+*.idea

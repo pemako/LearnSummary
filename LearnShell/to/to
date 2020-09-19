@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+source .config
+
+_config_keys=(${!_server_config[@]})
+_length=${#_server_config[@]}
+_login_server=$1
+_config_status=false
+
+if [ "$_login_server" == "" ];then
+    _help
+fi
+
+for i in "${_config_keys[@]}";do
+    if [ "$_login_server" == "$i" ];then
+        _config_status=true
+    fi
+done
+
+if [ "${_config_status}" == "false" ];then
+    _notic
+fi
+
+_host=$(echo ${_server_config["${_login_server}"]} | awk '{print $1}')
+_user=$(echo ${_server_config["${_login_server}"]} | awk '{print $2}')
+_passwd=$(echo ${_server_config["${_login_server}"]} | awk '{print $3}')
+_port=$(echo ${_server_config["${_login_server}"]} | awk '{print $4}')
+_jump=$(echo ${_server_config["${_login_server}"]} | awk '{print $5}')
+_command=$(echo ${_server_config["${_login_server}"]} | awk -F"'" '{print $2}')
+
+if [ "${_command}" != "" ]; then
+    _command="expect \"*]*\"
+    send \"${_command}\r\""
+fi
+
+if [ "${_jump}" != "" ] && [ "${_jump}" != "no" ]; then
+    _jump_host=$(echo ${_server_config["${_jump}"]} | awk '{print $1}')
+    _jump_user=$(echo ${_server_config["${_jump}"]} | awk '{print $2}')
+    _jump_passwd=$(echo ${_server_config["${_jump}"]} | awk '{print $3}')
+    _jump_port=$(echo ${_server_config["${_jump}"]} | awk '{print $4}')
+
+    expect -c "
+    set timeout 30
+    spawn ssh -p${_jump_port} ${_jump_user}@${_jump_host}
+    expect {
+        \"yes/no\" { send \"yes\r\"; exp_continue }
+        \"assword\" { send \"${_jump_passwd}\r\" }
+    }
+
+    expect \"*]*\" 
+    send \"ssh -p${_port} ${_user}@${_host}\r\"
+    expect \"assword:\" 
+    send \"${_passwd}\r\"
+    ${_command}
+    interact"
+else
+    expect -c "
+    set timeout 30
+    spawn ssh -p${_port} ${_user}@${_host}
+    expect {
+        \"yes/no\" {send \"yes\r\"; exp_continue }
+        \"*assword:\" { send \"$_passwd\r\" }
+    }
+    ${_command}
+    interact"
+fi
