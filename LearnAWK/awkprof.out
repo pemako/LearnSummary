@@ -1,0 +1,20 @@
+	# gawk profile, created Mon Apr  6 23:12:35 2020
+
+	# BEGIN rule(s)
+
+	BEGIN {
+     1  	printf "---|Header|--\n"
+	}
+
+	# Rule(s)
+
+     5  {
+     5  	print
+	}
+
+	# END rule(s)
+
+	END {
+     1  	printf "---|Footer|---\n"
+	}
+
